@@ -55,6 +55,129 @@ Wizard* MagicTree::getRoot() const {
     return root;
 }
 
+// Busca el mago que actualmente es dueño del hechizo
+Wizard* MagicTree::findCurrentOwner(Wizard* node) const {
+    if (!node) return nullptr;
+    if (node->isOwner) return node;
+    Wizard* left = findCurrentOwner(node->left);
+    if (left) return left;
+    return findCurrentOwner(node->right);
+}
+
+// Resetea el campo isOwner de todos los magos
+void MagicTree::resetAllOwners(Wizard* node) const {
+    if (!node) return;
+    node->isOwner = false;
+    resetAllOwners(node->left);
+    resetAllOwners(node->right);
+}
+
+// Recolecta todos los descendientes vivos de un nodo (DFS) en un arreglo dinámico manual
+void collectDescendants(const Wizard* node, Wizard** arr, int& count, int max, bool onlyAlive = true) {
+    if (!node || count >= max) return;
+    if ((onlyAlive && !node->isDead) || !onlyAlive) {
+        arr[count++] = const_cast<Wizard*>(node);
+    }
+    collectDescendants(node->left, arr, count, max, onlyAlive);
+    collectDescendants(node->right, arr, count, max, onlyAlive);
+}
+
+// Bubble sort manual para ordenar por edad descendente y luego por menor ID
+void sortCandidates(Wizard** arr, int count) {
+    for (int i = 0; i < count - 1; ++i) {
+        for (int j = 0; j < count - i - 1; ++j) {
+            if (arr[j]->age < arr[j+1]->age ||
+                (arr[j]->age == arr[j+1]->age && arr[j]->id > arr[j+1]->id)) {
+                Wizard* tmp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = tmp;
+            }
+        }
+    }
+}
+
+// Aplica las reglas de prioridad para elegir al mejor sucesor
+Wizard* MagicTree::findBestSuccessor(Wizard* node) const {
+    if (!node) return nullptr;
+    const int MAX_CANDIDATES = 100; // Ajustar según máximo esperado
+    Wizard* candidates[MAX_CANDIDATES];
+    int count = 0;
+    collectDescendants(node->left, candidates, count, MAX_CANDIDATES, true);
+    collectDescendants(node->right, candidates, count, MAX_CANDIDATES, true);
+    if (count == 0) return nullptr;
+
+    // 1. Magia elemental o unique
+    Wizard* priority1[MAX_CANDIDATES]; int p1 = 0;
+    for (int i = 0; i < count; ++i) {
+        if (strcmp(candidates[i]->typeMagic, "elemental") == 0 || strcmp(candidates[i]->typeMagic, "unique") == 0)
+            priority1[p1++] = candidates[i];
+    }
+    if (p1 > 0) {
+        sortCandidates(priority1, p1);
+        // Si el mejor tiene >70, buscar uno más joven
+        if (priority1[0]->age > 70) {
+            for (int i = 0; i < p1; ++i) if (priority1[i]->age <= 70) return priority1[i];
+        }
+        return priority1[0];
+    }
+    // 2. Magia mixed
+    Wizard* priority2[MAX_CANDIDATES]; int p2 = 0;
+    for (int i = 0; i < count; ++i) {
+        if (strcmp(candidates[i]->typeMagic, "mixed") == 0)
+            priority2[p2++] = candidates[i];
+    }
+    if (p2 > 0) {
+        sortCandidates(priority2, p2);
+        if (priority2[0]->age > 70) {
+            for (int i = 0; i < p2; ++i) if (priority2[i]->age <= 70) return priority2[i];
+        }
+        return priority2[0];
+    }
+    // 3. Primer hombre vivo
+    Wizard* males[MAX_CANDIDATES]; int m = 0;
+    for (int i = 0; i < count; ++i) {
+        if (candidates[i]->gender == 'H') males[m++] = candidates[i];
+    }
+    if (m > 0) {
+        sortCandidates(males, m);
+        if (males[0]->age > 70) {
+            for (int i = 0; i < m; ++i) if (males[i]->age <= 70) return males[i];
+        }
+        return males[0];
+    }
+    // 4. Primera mujer viva
+    Wizard* females[MAX_CANDIDATES]; int f = 0;
+    for (int i = 0; i < count; ++i) {
+        if (candidates[i]->gender == 'M') females[f++] = candidates[i];
+    }
+    if (f > 0) {
+        sortCandidates(females, f);
+        if (females[0]->age > 70) {
+            for (int i = 0; i < f; ++i) if (females[i]->age <= 70) return females[i];
+        }
+        return females[0];
+    }
+    return nullptr;
+}
+
+// Lógica principal de sucesión
+void MagicTree::reassignOwnerOnDeath() {
+    Wizard* currentOwner = findCurrentOwner(root);
+    if (!currentOwner) {
+        std::cout << "No hay dueño actual del hechizo." << std::endl;
+        return;
+    }
+    currentOwner->isDead = true;
+    resetAllOwners(root);
+    Wizard* successor = findBestSuccessor(currentOwner);
+    if (successor) {
+        successor->isOwner = true;
+        std::cout << "Nuevo dueño del hechizo: " << successor->name << " " << successor->lastName << " (ID: " << successor->id << ")\n";
+    } else {
+        std::cout << "No hay sucesor válido. El hechizo queda sin dueño." << std::endl;
+    }
+}
+
 void printSuccessionLineHelper(const Wizard* node) {
     if (!node) return;
     if (!node->isDead) {
