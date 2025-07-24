@@ -192,6 +192,139 @@ void MagicTree::printSuccessionLine() const {
     printSuccessionLineHelper(root);
 }
 
+// Llena un arreglo con todos los magos del árbol (orden no relevante para la sucesión)
+void MagicTree::fillWizardArray(const Wizard* node, Wizard** arr, int& count, int max) const {
+    if (!node || count >= max) return;
+    arr[count++] = const_cast<Wizard*>(node);
+    fillWizardArray(node->left, arr, count, max);
+    fillWizardArray(node->right, arr, count, max);
+}
+
+// Simula la línea de sucesión real, imprimiendo el orden correcto
+void MagicTree::simulateSuccessionLine(const Wizard* start, bool* deadMask, int maxWizards) const {
+    const Wizard* current = start;
+    int printed = 0;
+    while (true) {
+        // Buscar el siguiente sucesor según las reglas, ignorando los marcados como muertos en deadMask
+        // Creamos una versión modificada de findBestSuccessor que respeta deadMask
+        // ---
+        // Recolectar candidatos vivos (no marcados como muertos)
+        Wizard* candidates[100];
+        int count = 0;
+        // Solo descendientes del actual
+        if (current->left) fillWizardArray(current->left, candidates, count, 100);
+        if (current->right) fillWizardArray(current->right, candidates, count, 100);
+        // Filtrar solo vivos y no marcados como muertos
+        int filtered = 0;
+        Wizard* filteredCandidates[100];
+        for (int i = 0; i < count; ++i) {
+            if (!candidates[i]->isDead && !deadMask[candidates[i]->id])
+                filteredCandidates[filtered++] = candidates[i];
+        }
+        if (filtered == 0) break;
+        // Aplicar reglas de prioridad
+        // 1. Magia elemental o unique
+        Wizard* priority1[100]; int p1 = 0;
+        for (int i = 0; i < filtered; ++i) {
+            if (strcmp(filteredCandidates[i]->typeMagic, "elemental") == 0 || strcmp(filteredCandidates[i]->typeMagic, "unique") == 0)
+                priority1[p1++] = filteredCandidates[i];
+        }
+        if (p1 > 0) {
+            sortCandidates(priority1, p1);
+            // Si el mejor tiene >70, buscar uno más joven
+            if (priority1[0]->age > 70) {
+                for (int i = 0; i < p1; ++i) if (priority1[i]->age <= 70) {
+                    current = priority1[i];
+                    break;
+                }
+                if (current != priority1[0]) current = priority1[0];
+            } else {
+                current = priority1[0];
+            }
+        } else {
+            // 2. Magia mixed
+            Wizard* priority2[100]; int p2 = 0;
+            for (int i = 0; i < filtered; ++i) {
+                if (strcmp(filteredCandidates[i]->typeMagic, "mixed") == 0)
+                    priority2[p2++] = filteredCandidates[i];
+            }
+            if (p2 > 0) {
+                sortCandidates(priority2, p2);
+                if (priority2[0]->age > 70) {
+                    for (int i = 0; i < p2; ++i) if (priority2[i]->age <= 70) {
+                        current = priority2[i];
+                        break;
+                    }
+                    if (current != priority2[0]) current = priority2[0];
+                } else {
+                    current = priority2[0];
+                }
+            } else {
+                // 3. Primer hombre vivo
+                Wizard* males[100]; int m = 0;
+                for (int i = 0; i < filtered; ++i) {
+                    if (filteredCandidates[i]->gender == 'H') males[m++] = filteredCandidates[i];
+                }
+                if (m > 0) {
+                    sortCandidates(males, m);
+                    if (males[0]->age > 70) {
+                        for (int i = 0; i < m; ++i) if (males[i]->age <= 70) {
+                            current = males[i];
+                            break;
+                        }
+                        if (current != males[0]) current = males[0];
+                    } else {
+                        current = males[0];
+                    }
+                } else {
+                    // 4. Primera mujer viva
+                    Wizard* females[100]; int f = 0;
+                    for (int i = 0; i < filtered; ++i) {
+                        if (filteredCandidates[i]->gender == 'M') females[f++] = filteredCandidates[i];
+                    }
+                    if (f > 0) {
+                        sortCandidates(females, f);
+                        if (females[0]->age > 70) {
+                            for (int i = 0; i < f; ++i) if (females[i]->age <= 70) {
+                                current = females[i];
+                                break;
+                            }
+                            if (current != females[0]) current = females[0];
+                        } else {
+                            current = females[0];
+                        }
+                    } else {
+                        break; // No hay más sucesores
+                    }
+                }
+            }
+        }
+        // Imprimir el sucesor
+        std::cout << ++printed << ". " << current->name << " " << current->lastName << " (ID: " << current->id << ")\n";
+        // Marcarlo como "muerto" virtualmente
+        deadMask[current->id] = true;
+    }
+}
+
+void MagicTree::printTrueSuccessionLine() const {
+    // Obtener todos los magos para saber el máximo ID
+    Wizard* all[100]; int count = 0;
+    fillWizardArray(root, all, count, 100);
+    // Buscar dueño actual
+    Wizard* owner = nullptr;
+    for (int i = 0; i < count; ++i) {
+        if (all[i]->isOwner) { owner = all[i]; break; }
+    }
+    if (!owner) {
+        std::cout << "No hay dueño actual del hechizo.\n";
+        return;
+    }
+    std::cout << "\n--- Línea de sucesión real (según reglas) ---\n";
+    bool deadMask[100] = {0};
+    deadMask[owner->id] = true; // El dueño actual no está en la línea de sucesión
+    simulateSuccessionLine(owner, deadMask, 100);
+}
+
 // Búsqueda pública por ID
 Wizard* MagicTree::findWizardByIdPublic(int id) {
     return findWizardById(root, id);

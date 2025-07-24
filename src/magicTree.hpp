@@ -12,6 +12,10 @@ private:
     Wizard* findCurrentOwner(Wizard* node) const;
     Wizard* findBestSuccessor(Wizard* node) const;
     void resetAllOwners(Wizard* node) const;
+    void printTrueSuccessionLine() const; // Muestra la línea de sucesión real según las reglas
+private:
+    void simulateSuccessionLine(const Wizard* start, bool* deadMask, int maxWizards) const;
+    void fillWizardArray(const Wizard* node, Wizard** arr, int& count, int max) const;
 
 public:
     MagicTree();
