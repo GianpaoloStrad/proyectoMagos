@@ -4,7 +4,16 @@
 MagicTree::MagicTree() : root(nullptr) {}
 
 MagicTree::~MagicTree() {
-    // Implementar destructor recursivo (DFS)
+    // Destructor recursivo para liberar todos los nodos
+    clearTree(root);
+}
+
+// Función auxiliar recursiva para liberar memoria
+void MagicTree::clearTree(Wizard* node) {
+    if (!node) return;
+    clearTree(node->left);
+    clearTree(node->right);
+    delete node;
 }
 
 void MagicTree::buildFromCSV(const char* filePath) {
@@ -37,8 +46,9 @@ void MagicTree::insertWizard(Wizard* parent, Wizard* newWizard) {
     } else if (!parent->right) {
         parent->right = newWizard;
     } else {
-        // Priorizar izquierda (o implementar reglas del proyecto)
-        parent->left = newWizard;
+        // Ambos hijos existen, no se inserta para evitar sobrescribir
+        // Puedes imprimir un mensaje de advertencia si lo deseas
+        // printf("Advertencia: El mago con id %d ya tiene dos discípulos.\n", parent->id);
     }
 }
 Wizard* MagicTree::getRoot() const {
