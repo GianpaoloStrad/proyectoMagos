@@ -17,7 +17,8 @@ int main() {
         std::cout << "2. Mostrar línea de sucesión (magos vivos)" << std::endl;
         std::cout << "3. Simular muerte del dueño y reasignar hechizo" << std::endl;
         std::cout << "4. Editar datos de un mago" << std::endl;
-        std::cout << "5. Salir" << std::endl;
+        std::cout << "5. Guardar cambios en CSV" << std::endl;
+        std::cout << "6. Salir" << std::endl;
         std::cout << "Seleccione una opción: ";
         std::cin >> option;
         std::cin.ignore(); // Limpiar buffer
@@ -40,12 +41,15 @@ int main() {
                 break;
             }
             case 5:
+                tree.saveToCSV("../bin/wizards.csv");
+                break;
+            case 6:
                 std::cout << "Saliendo..." << std::endl;
                 break;
             default:
                 std::cout << "Opción no válida. Intente de nuevo." << std::endl;
         }
-    } while(option != 5);
+    } while(option != 6);
 
     return 0;
 }

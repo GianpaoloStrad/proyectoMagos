@@ -240,3 +240,34 @@ void MagicTree::editWizardData(Wizard* wizard) {
     if (strlen(buffer) == 1 && (buffer[0] == '0' || buffer[0] == '1')) wizard->isOwner = (buffer[0] == '1');
     std::cout << "\nDatos actualizados.\n";
 }
+
+// Función auxiliar para guardar un mago y sus descendientes en el archivo CSV
+void saveWizardToCSV(const Wizard* node, FILE* file) {
+    if (!node) return;
+    fprintf(file, "%d,%s,%s,%c,%d,%d,%d,%s,%d\n",
+        node->id,
+        node->name,
+        node->lastName,
+        node->gender,
+        node->age,
+        node->idFather,
+        node->isDead ? 1 : 0,
+        node->typeMagic,
+        node->isOwner ? 1 : 0
+    );
+    saveWizardToCSV(node->left, file);
+    saveWizardToCSV(node->right, file);
+}
+
+void MagicTree::saveToCSV(const char* filePath) const {
+    FILE* file = fopen(filePath, "w");
+    if (!file) {
+        std::cout << "No se pudo abrir el archivo para guardar." << std::endl;
+        return;
+    }
+    // Escribir cabecera
+    fprintf(file, "id,name,last_name,gender,age,id_father,is_dead,type_magic,is_owner\n");
+    saveWizardToCSV(root, file);
+    fclose(file);
+    std::cout << "\nÁrbol guardado exitosamente en el archivo CSV.\n";
+}
