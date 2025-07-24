@@ -13,4 +13,5 @@ public:
     ~MagicTree();
     void buildFromCSV(const char* filePath);
     Wizard* getRoot() const;
+    void printSuccessionLine() const; // Muestra la línea de sucesión (magos vivos)
 };

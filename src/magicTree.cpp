@@ -54,3 +54,17 @@ void MagicTree::insertWizard(Wizard* parent, Wizard* newWizard) {
 Wizard* MagicTree::getRoot() const {
     return root;
 }
+
+void printSuccessionLineHelper(const Wizard* node) {
+    if (!node) return;
+    if (!node->isDead) {
+        std::cout << node->name << " " << node->lastName << " (ID: " << node->id << ")\n";
+    }
+    printSuccessionLineHelper(node->left);
+    printSuccessionLineHelper(node->right);
+}
+
+void MagicTree::printSuccessionLine() const {
+    std::cout << "\n--- Línea de sucesión (magos vivos) ---\n";
+    printSuccessionLineHelper(root);
+}

@@ -14,7 +14,8 @@ int main() {
     do {
         std::cout << "\n--- Menú ---" << std::endl;
         std::cout << "1. Mostrar mago raíz" << std::endl;
-        std::cout << "2. Salir" << std::endl;
+        std::cout << "2. Mostrar línea de sucesión (magos vivos)" << std::endl;
+        std::cout << "3. Salir" << std::endl;
         std::cout << "Seleccione una opción: ";
         std::cin >> option;
         std::cin.ignore(); // Limpiar buffer
@@ -24,12 +25,15 @@ int main() {
                 std::cout << "Mago raíz: " << tree.getRoot()->name << std::endl;
                 break;
             case 2:
+                tree.printSuccessionLine();
+                break;
+            case 3:
                 std::cout << "Saliendo..." << std::endl;
                 break;
             default:
                 std::cout << "Opción no válida. Intente de nuevo." << std::endl;
         }
-    } while(option != 2);
+    } while(option != 3);
 
     return 0;
 }
