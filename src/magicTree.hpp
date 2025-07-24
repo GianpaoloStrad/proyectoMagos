@@ -19,4 +19,6 @@ public:
     void buildFromCSV(const char* filePath);
     Wizard* getRoot() const;
     void printSuccessionLine() const; // Muestra la línea de sucesión (magos vivos)
+    Wizard* findWizardByIdPublic(int id); // Búsqueda pública por ID
+    void editWizardData(Wizard* wizard); // Editar datos permitidos de un mago
 };

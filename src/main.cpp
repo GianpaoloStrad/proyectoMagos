@@ -16,7 +16,8 @@ int main() {
         std::cout << "1. Mostrar mago raíz" << std::endl;
         std::cout << "2. Mostrar línea de sucesión (magos vivos)" << std::endl;
         std::cout << "3. Simular muerte del dueño y reasignar hechizo" << std::endl;
-        std::cout << "4. Salir" << std::endl;
+        std::cout << "4. Editar datos de un mago" << std::endl;
+        std::cout << "5. Salir" << std::endl;
         std::cout << "Seleccione una opción: ";
         std::cin >> option;
         std::cin.ignore(); // Limpiar buffer
@@ -31,13 +32,20 @@ int main() {
             case 3:
                 tree.reassignOwnerOnDeath();
                 break;
-            case 4:
+            case 4: {
+                int id;
+                std::cout << "Ingrese el ID del mago a editar: ";
+                std::cin >> id;
+                tree.editWizardData(tree.findWizardByIdPublic(id));
+                break;
+            }
+            case 5:
                 std::cout << "Saliendo..." << std::endl;
                 break;
             default:
                 std::cout << "Opción no válida. Intente de nuevo." << std::endl;
         }
-    } while(option != 4);
+    } while(option != 5);
 
     return 0;
 }
