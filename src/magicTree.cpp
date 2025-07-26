@@ -22,9 +22,13 @@ void MagicTree::clearTree(Wizard* node) {
     delete node;
 }
 
-void MagicTree::buildFromCSV(const char* filePath) {
+bool MagicTree::buildFromCSV(const char* filePath) {
     int count = 0;
     Wizard** wizards = csvManager::loadWizards(filePath, &count);
+    
+    if (!wizards || count == 0) {
+        return false;
+    }
 
     for (int i = 0; i < count; ++i) {
         if (wizards[i]->idFather == -1) {
@@ -38,6 +42,7 @@ void MagicTree::buildFromCSV(const char* filePath) {
     // No liberar la memoria aquí, ya que los nodos están en el árbol
     // Solo liberar el array de punteros, no los objetos Wizard
     delete[] wizards;
+    return true;
 }
 
 void MagicTree::loadSpellsFromCSV(const char* filePath) {
@@ -420,11 +425,50 @@ void MagicTree::saveToCSV(const char* filePath) const {
     std::cout << "\nÁrbol guardado exitosamente en el archivo CSV.\n";
 }
 
-// Mostrar hechizos de un mago específico
-void MagicTree::showWizardSpells(int wizardId) {
+// Mostrar datos completos de un mago específico
+void MagicTree::showWizardCompleteData(int wizardId) {
     Wizard* wizard = findWizardByIdPublic(wizardId);
     if (wizard) {
-        wizard->showSpells(spellManager);
+        std::cout << "\n=== DATOS COMPLETOS DEL MAGO ===" << std::endl;
+        std::cout << "ID: " << wizard->id << std::endl;
+        std::cout << "Nombre: " << wizard->name << " " << wizard->lastName << std::endl;
+        std::cout << "Género: " << (wizard->gender == 'H' ? "Hombre" : "Mujer") << std::endl;
+        std::cout << "Edad: " << wizard->age << " años" << std::endl;
+        std::cout << "ID del Padre/Maestro: " << (wizard->idFather == -1 ? "Ninguno (Mago Raíz)" : std::to_string(wizard->idFather)) << std::endl;
+        std::cout << "Estado: " << (wizard->isDead ? "Muerto" : "Vivo") << std::endl;
+        std::cout << "Tipo de Magia: " << wizard->typeMagic << std::endl;
+        std::cout << "Es Dueño del Hechizo: " << (wizard->isOwner ? "Sí" : "No") << std::endl;
+        
+        // Mostrar información de discípulos
+        std::cout << "\n--- Discípulos ---" << std::endl;
+        if (wizard->left) {
+            std::cout << "Discípulo Izquierdo: " << wizard->left->name << " " << wizard->left->lastName << " (ID: " << wizard->left->id << ")" << std::endl;
+        } else {
+            std::cout << "Discípulo Izquierdo: Ninguno" << std::endl;
+        }
+        if (wizard->right) {
+            std::cout << "Discípulo Derecho: " << wizard->right->name << " " << wizard->right->lastName << " (ID: " << wizard->right->id << ")" << std::endl;
+        } else {
+            std::cout << "Discípulo Derecho: Ninguno" << std::endl;
+        }
+        
+        // Mostrar hechizos
+        std::cout << "\n--- Hechizos Conocidos ---" << std::endl;
+        if (spellManager) {
+            spellManager->printSpellsForWizard(wizard->id);
+        } else {
+            std::cout << "- No hay información de hechizos disponible" << std::endl;
+        }
+        
+        // Mostrar hechizos legendarios si es dueño
+        if (wizard->isOwner) {
+            std::cout << "\n*** HECHIZOS LEGENDARIOS (DUEÑO DEL HECHIZO) ***" << std::endl;
+            std::cout << "- Hechizo de Visión de Sucesión" << std::endl;
+            std::cout << "- Control Total de la Escuela" << std::endl;
+            std::cout << "- Acceso a Todos los Conocimientos" << std::endl;
+        }
+        
+        std::cout << "\n";
     } else {
         std::cout << "Mago con ID " << wizardId << " no encontrado." << std::endl;
     }

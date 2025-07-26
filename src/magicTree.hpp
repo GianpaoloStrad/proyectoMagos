@@ -19,7 +19,7 @@ private:
 public:
     MagicTree();
     ~MagicTree();
-    void buildFromCSV(const char* filePath);
+    bool buildFromCSV(const char* filePath);
     void loadSpellsFromCSV(const char* filePath);
     Wizard* getRoot() const;
     void printSuccessionLine() const; // Muestra la línea de sucesión (magos vivos)
@@ -28,5 +28,5 @@ public:
     Wizard* findWizardByIdPublic(int id); // Búsqueda pública por ID
     void editWizardData(Wizard* wizard); // Editar datos permitidos de un mago
     void saveToCSV(const char* filePath) const; // Guarda todos los magos en un archivo CSV
-    void showWizardSpells(int wizardId); // Mostrar hechizos de un mago específico
+    void showWizardCompleteData(int wizardId); // Mostrar datos completos de un mago específico
 }; 

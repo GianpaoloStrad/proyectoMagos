@@ -2,7 +2,7 @@ id,name,last_name,gender,age,id_father,is_dead,type_magic,is_owner
 1,Gandalf,ElGris,H,85,-1,1,elemental,0
 2,Saruman,ElBlanco,H,90,1,0,unique,0
 5,Albus,Dumbledore,H,115,2,0,unique,0
-7,Hermione,Granger,M,19,5,0,elemental,1
+7,Hermione,Granger,M,19,5,1,elemental,0
 8,Ron,Weasley,H,18,5,0,mixed,0
 13,Ginny,Weasley,M,16,8,0,elemental,0
 14,Fred,Weasley,H,20,8,1,mixed,0
