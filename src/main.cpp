@@ -4,6 +4,7 @@
 int main() {
     MagicTree tree;
     tree.buildFromCSV("../bin/wizards.csv");
+    tree.loadSpellsFromCSV("../bin/spells.csv");
 
     if (!tree.getRoot()) {
         std::cerr << "Error al cargar el CSV." << std::endl;

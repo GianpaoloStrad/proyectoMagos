@@ -1,4 +1,5 @@
 #include "Wizard.hpp"
+#include "SpellManager.hpp"
 #include <cstring> // Para strcpy
 #include <iostream>
 
@@ -25,7 +26,7 @@ bool Wizard::canBeOwner() const {
 }
 
 // --- Mostrar lista de hechizos del mago ---
-void Wizard::showSpells() const {
+void Wizard::showSpells(const SpellManager* spellManager) const {
     std::cout << "\n=== Hechizos de " << name << " " << lastName << " ===\n";
     std::cout << "Tipo de magia: " << typeMagic << "\n";
     std::cout << "Estado: " << (isDead ? "Muerto" : "Vivo") << "\n";
@@ -34,27 +35,32 @@ void Wizard::showSpells() const {
     
     // Mostrar hechizos según el tipo de magia
     std::cout << "\nHechizos conocidos:\n";
-    if (strcmp(typeMagic, "elemental") == 0) {
-        std::cout << "- Bola de Fuego\n";
-        std::cout << "- Tormenta de Hielo\n";
-        std::cout << "- Rayo Eléctrico\n";
-        std::cout << "- Terremoto\n";
-        std::cout << "- Tornado\n";
-    } else if (strcmp(typeMagic, "unique") == 0) {
-        std::cout << "- Hechizo de Invisibilidad\n";
-        std::cout << "- Transformación Animal\n";
-        std::cout << "- Telepatía\n";
-        std::cout << "- Control Mental\n";
-        std::cout << "- Portal Dimensional\n";
-    } else if (strcmp(typeMagic, "mixed") == 0) {
-        std::cout << "- Hechizo Combinado Elemental\n";
-        std::cout << "- Transformación Múltiple\n";
-        std::cout << "- Escudo Protector\n";
-        std::cout << "- Curación Avanzada\n";
-        std::cout << "- Ilusión Realista\n";
-    } else if (strcmp(typeMagic, "no_magic") == 0) {
-        std::cout << "- No posee hechizos mágicos\n";
-        std::cout << "- Habilidades físicas mejoradas\n";
+    if (spellManager) {
+        spellManager->printSpellsForWizard(id);
+    } else {
+        // Fallback si no hay SpellManager
+        if (strcmp(typeMagic, "elemental") == 0) {
+            std::cout << "- Bola de Fuego\n";
+            std::cout << "- Tormenta de Hielo\n";
+            std::cout << "- Rayo Eléctrico\n";
+            std::cout << "- Terremoto\n";
+            std::cout << "- Tornado\n";
+        } else if (strcmp(typeMagic, "unique") == 0) {
+            std::cout << "- Hechizo de Invisibilidad\n";
+            std::cout << "- Transformación Animal\n";
+            std::cout << "- Telepatía\n";
+            std::cout << "- Control Mental\n";
+            std::cout << "- Portal Dimensional\n";
+        } else if (strcmp(typeMagic, "mixed") == 0) {
+            std::cout << "- Hechizo Combinado Elemental\n";
+            std::cout << "- Transformación Múltiple\n";
+            std::cout << "- Escudo Protector\n";
+            std::cout << "- Curación Avanzada\n";
+            std::cout << "- Ilusión Realista\n";
+        } else if (strcmp(typeMagic, "no_magic") == 0) {
+            std::cout << "- No posee hechizos mágicos\n";
+            std::cout << "- Habilidades físicas mejoradas\n";
+        }
     }
     
     if (isOwner) {

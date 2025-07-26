@@ -1,13 +1,17 @@
 #include "MagicTree.hpp"
 #include "csvManager.hpp"
+#include "SpellManager.hpp"
 #include <iostream>
 #include <cstring>
 
-MagicTree::MagicTree() : root(nullptr) {}
+MagicTree::MagicTree() : root(nullptr), spellManager(nullptr) {}
 
 MagicTree::~MagicTree() {
     // Destructor recursivo para liberar todos los nodos
     clearTree(root);
+    if (spellManager) {
+        delete spellManager;
+    }
 }
 
 // Función auxiliar recursiva para liberar memoria
@@ -34,6 +38,13 @@ void MagicTree::buildFromCSV(const char* filePath) {
     // No liberar la memoria aquí, ya que los nodos están en el árbol
     // Solo liberar el array de punteros, no los objetos Wizard
     delete[] wizards;
+}
+
+void MagicTree::loadSpellsFromCSV(const char* filePath) {
+    if (!spellManager) {
+        spellManager = new SpellManager();
+    }
+    spellManager->loadSpellsFromCSV(filePath);
 }
 Wizard* MagicTree::findWizardById(Wizard* node, int id) {
     if (!node) return nullptr;
@@ -413,7 +424,7 @@ void MagicTree::saveToCSV(const char* filePath) const {
 void MagicTree::showWizardSpells(int wizardId) {
     Wizard* wizard = findWizardByIdPublic(wizardId);
     if (wizard) {
-        wizard->showSpells();
+        wizard->showSpells(spellManager);
     } else {
         std::cout << "Mago con ID " << wizardId << " no encontrado." << std::endl;
     }

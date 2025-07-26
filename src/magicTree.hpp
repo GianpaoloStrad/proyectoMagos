@@ -1,9 +1,12 @@
 #pragma once
 #include "Wizard.hpp"
 
+class SpellManager; // Forward declaration
+
 class MagicTree {
 private:
     Wizard* root;
+    SpellManager* spellManager;
     Wizard* findWizardById(Wizard* node, int id);
     void insertWizard(Wizard* parent, Wizard* newWizard);
     void clearTree(Wizard* node); // Destructor recursivo
@@ -17,6 +20,7 @@ public:
     MagicTree();
     ~MagicTree();
     void buildFromCSV(const char* filePath);
+    void loadSpellsFromCSV(const char* filePath);
     Wizard* getRoot() const;
     void printSuccessionLine() const; // Muestra la línea de sucesión (magos vivos)
     void printTrueSuccessionLine() const; // Muestra la línea de sucesión real según las reglas

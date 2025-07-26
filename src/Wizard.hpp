@@ -2,6 +2,8 @@
 #define MAX_NAME_LENGTH 50
 #define MAX_MAGIC_TYPE_LENGTH 20
 
+class SpellManager; // Forward declaration
+
 class Wizard {
 public:
     int id;
@@ -20,5 +22,5 @@ public:
     Wizard(int id, const char* name, const char* lastName, char gender, int age, 
            int idFather, bool isDead, const char* typeMagic, bool isOwner);
     bool canBeOwner() const;
-    void showSpells() const; // Mostrar lista de hechizos del mago
+    void showSpells(const SpellManager* spellManager) const; // Mostrar lista de hechizos del mago
 };
