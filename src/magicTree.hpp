@@ -26,4 +26,5 @@ public:
     Wizard* findWizardByIdPublic(int id); // Búsqueda pública por ID
     void editWizardData(Wizard* wizard); // Editar datos permitidos de un mago
     void saveToCSV(const char* filePath) const; // Guarda todos los magos en un archivo CSV
+    void showWizardSpells(int wizardId); // Mostrar hechizos de un mago específico
 };

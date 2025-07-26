@@ -1,5 +1,7 @@
-#include "MagicTree.hpp"
-#include "CSVManager.hpp"
+#include "magicTree.hpp"
+#include "csvManager.hpp"
+#include <iostream>
+#include <cstring>
 
 MagicTree::MagicTree() : root(nullptr) {}
 
@@ -403,4 +405,14 @@ void MagicTree::saveToCSV(const char* filePath) const {
     saveWizardToCSV(root, file);
     fclose(file);
     std::cout << "\nÁrbol guardado exitosamente en el archivo CSV.\n";
+}
+
+// Mostrar hechizos de un mago específico
+void MagicTree::showWizardSpells(int wizardId) {
+    Wizard* wizard = findWizardByIdPublic(wizardId);
+    if (wizard) {
+        wizard->showSpells();
+    } else {
+        std::cout << "Mago con ID " << wizardId << " no encontrado." << std::endl;
+    }
 }
