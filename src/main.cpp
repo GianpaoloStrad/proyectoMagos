@@ -1,4 +1,4 @@
-#include "magicTree.hpp"
+#include "MagicTree.hpp"
 #include <iostream>
 
 int main() {

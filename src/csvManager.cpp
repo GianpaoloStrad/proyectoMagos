@@ -21,15 +21,40 @@ Wizard** csvManager::loadWizards(const char* filePath, int* count) {
 
     int index = 0;
     while (fgets(line, sizeof(line), file)) {
+        // Limpiar el final de la línea
+        line[strcspn(line, "\r\n")] = 0;
+        
         int id, age, idFather, isDead, isOwner;
         char name[MAX_NAME_LENGTH], lastName[MAX_NAME_LENGTH], gender, typeMagic[MAX_MAGIC_TYPE_LENGTH];
 
-        sscanf(line, "%d,%[^,],%[^,],%c,%d,%d,%d,%[^,],%d",
-               &id, name, lastName, &gender, &age, &idFather, 
-               &isDead, typeMagic, &isOwner);
+        // Usar un formato más robusto para el parsing
+        if (sscanf(line, "%d,%[^,],%[^,],%c,%d,%d,%d,%[^,],%d",
+                   &id, name, lastName, &gender, &age, &idFather, 
+                   &isDead, typeMagic, &isOwner) == 9) {
+            
+            // Limpiar espacios en blanco
+            char* namePtr = name;
+            char* lastNamePtr = lastName;
+            char* typeMagicPtr = typeMagic;
+            
+            // Eliminar espacios al inicio
+            while (*namePtr == ' ') namePtr++;
+            while (*lastNamePtr == ' ') lastNamePtr++;
+            while (*typeMagicPtr == ' ') typeMagicPtr++;
+            
+            // Eliminar espacios al final
+            char* end = namePtr + strlen(namePtr) - 1;
+            while (end > namePtr && *end == ' ') *end-- = 0;
+            
+            end = lastNamePtr + strlen(lastNamePtr) - 1;
+            while (end > lastNamePtr && *end == ' ') *end-- = 0;
+            
+            end = typeMagicPtr + strlen(typeMagicPtr) - 1;
+            while (end > typeMagicPtr && *end == ' ') *end-- = 0;
 
-        wizards[index++] = new Wizard(id, name, lastName, gender, age, 
-                                     idFather, isDead, typeMagic, isOwner);
+            wizards[index++] = new Wizard(id, namePtr, lastNamePtr, gender, age, 
+                                         idFather, isDead, typeMagicPtr, isOwner);
+        }
     }
 
     fclose(file);

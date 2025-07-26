@@ -1,4 +1,4 @@
-#include "magicTree.hpp"
+#include "MagicTree.hpp"
 #include "csvManager.hpp"
 #include <iostream>
 #include <cstring>
@@ -31,7 +31,9 @@ void MagicTree::buildFromCSV(const char* filePath) {
         }
     }
 
-    csvManager::freeWizardArray(wizards, count);
+    // No liberar la memoria aquí, ya que los nodos están en el árbol
+    // Solo liberar el array de punteros, no los objetos Wizard
+    delete[] wizards;
 }
 Wizard* MagicTree::findWizardById(Wizard* node, int id) {
     if (!node) return nullptr;
