@@ -29,4 +29,8 @@ public:
     void editWizardData(Wizard* wizard); // Editar datos permitidos de un mago
     void saveToCSV(const char* filePath) const; // Guarda todos los magos en un archivo CSV
     void showWizardCompleteData(int wizardId); // Mostrar datos completos de un mago específico
-}; 
+    void checkAndReassignOwner(); // Verificar y reasignar automáticamente si el dueño está muerto
+    Wizard* getCurrentOwner() const; // Obtener el dueño actual vivo del hechizo
+private:
+    Wizard* findBestSuccessorFromAll() const; // Buscar el mejor sucesor en todo el árbol
+};

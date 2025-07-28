@@ -3,20 +3,11 @@
 
 int main() {
     MagicTree tree;
-    
-    // Intentar cargar desde diferentes ubicaciones
+    // Siempre busca los archivos en el mismo directorio donde está el ejecutable
     const char* wizardsPath = "wizards.csv";
     const char* spellsPath = "spells.csv";
-    
-    // Si no encuentra en el directorio actual, intentar en bin/
-    if (!tree.buildFromCSV(wizardsPath)) {
-        wizardsPath = "bin/wizards.csv";
-        spellsPath = "bin/spells.csv";
-        tree.buildFromCSV(wizardsPath);
-        tree.loadSpellsFromCSV(spellsPath);
-    } else {
-        tree.loadSpellsFromCSV(spellsPath);
-    }
+    tree.buildFromCSV(wizardsPath);
+    tree.loadSpellsFromCSV(spellsPath);
 
     if (!tree.getRoot()) {
         std::cerr << "Error al cargar el CSV." << std::endl;
@@ -31,16 +22,29 @@ int main() {
         std::cout << "3. Simular muerte del dueño y reasignar hechizo" << std::endl;
         std::cout << "4. Editar datos de un mago" << std::endl;
         std::cout << "5. Mostrar datos completos de un mago" << std::endl;
-        std::cout << "6. Guardar cambios en CSV" << std::endl;
-        std::cout << "7. Salir" << std::endl;
+        std::cout << "6. Salir" << std::endl;
         std::cout << "Seleccione una opción: ";
         std::cin >> option;
         std::cin.ignore(); // Limpiar buffer
 
         switch(option) {
-            case 1:
-                std::cout << "Mago raíz: " << tree.getRoot()->name << std::endl;
+            case 1: {
+                // Mostrar el dueño vivo actual del hechizo
+                Wizard* owner = tree.getCurrentOwner();
+                if (owner) {
+                    std::cout << "Dueño actual del hechizo: " << owner->name << " " << owner->lastName << " (ID: " << owner->id << ")" << std::endl;
+                } else {
+                    std::cout << "No hay dueño vivo del hechizo. Reasignando automáticamente..." << std::endl;
+                    tree.checkAndReassignOwner();
+                    owner = tree.getCurrentOwner();
+                    if (owner) {
+                        std::cout << "Nuevo dueño: " << owner->name << " " << owner->lastName << " (ID: " << owner->id << ")" << std::endl;
+                    } else {
+                        std::cout << "No se pudo asignar un nuevo dueño." << std::endl;
+                    }
+                }
                 break;
+            }
             case 2:
                 tree.printSuccessionLine();
                 break;
@@ -62,16 +66,12 @@ int main() {
                 break;
             }
             case 6:
-                // Guardar en la misma ubicación donde se cargó
-                tree.saveToCSV(wizardsPath);
-                break;
-            case 7:
                 std::cout << "Saliendo..." << std::endl;
                 break;
             default:
                 std::cout << "Opción no válida. Intente de nuevo." << std::endl;
         }
-    } while(option != 7);
+    } while(option != 6);
 
     return 0;
 }

@@ -15,22 +15,30 @@ id,spells
 2,Resurrección Menor
 2,Clonación Temporal
 2,Manipulación del Tiempo
-3,Hechizo Combinado Elemental
-3,Transformación Múltiple
-3,Escudo Protector
-3,Curación Avanzada
-3,Ilusión Realista
-3,Teletransporte
-3,Amplificación de Poder
-3,Fusión de Elementos
-5,Hechizo de Invisibilidad
-5,Transformación Animal
-5,Telepatía
-5,Control Mental
-5,Portal Dimensional
-5,Resurrección Menor
-5,Clonación Temporal
-5,Manipulación del Tiempo
+3,Bola de Fuego
+3,Tormenta de Hielo
+3,Rayo Eléctrico
+3,Terremoto
+3,Tornado
+3,Muro de Agua
+3,Explosión de Tierra
+3,Tormenta de Arena
+4,Hechizo de Invisibilidad
+4,Transformación Animal
+4,Telepatía
+4,Control Mental
+4,Portal Dimensional
+4,Resurrección Menor
+4,Clonación Temporal
+4,Manipulación del Tiempo
+6,Bola de Fuego
+6,Tormenta de Hielo
+6,Rayo Eléctrico
+6,Terremoto
+6,Tornado
+6,Muro de Agua
+6,Explosión de Tierra
+6,Tormenta de Arena
 7,Bola de Fuego
 7,Tormenta de Hielo
 7,Rayo Eléctrico
@@ -55,14 +63,14 @@ id,spells
 9,Resurrección Menor
 9,Clonación Temporal
 9,Manipulación del Tiempo
-10,Hechizo Combinado Elemental
-10,Transformación Múltiple
-10,Escudo Protector
-10,Curación Avanzada
-10,Ilusión Realista
-10,Teletransporte
-10,Amplificación de Poder
-10,Fusión de Elementos
+10,Hechizo de Invisibilidad
+10,Transformación Animal
+10,Telepatía
+10,Control Mental
+10,Portal Dimensional
+10,Resurrección Menor
+10,Clonación Temporal
+10,Manipulación del Tiempo
 11,Bola de Fuego
 11,Tormenta de Hielo
 11,Rayo Eléctrico
@@ -71,27 +79,125 @@ id,spells
 11,Muro de Agua
 11,Explosión de Tierra
 11,Tormenta de Arena
-12,Hechizo de Invisibilidad
-12,Transformación Animal
-12,Telepatía
-12,Control Mental
-12,Portal Dimensional
-12,Resurrección Menor
-12,Clonación Temporal
-12,Manipulación del Tiempo
-13,Bola de Fuego
-13,Tormenta de Hielo
-13,Rayo Eléctrico
-13,Terremoto
-13,Tornado
-13,Muro de Agua
-13,Explosión de Tierra
-13,Tormenta de Arena
-15,Hechizo Combinado Elemental
-15,Transformación Múltiple
-15,Escudo Protector
-15,Curación Avanzada
-15,Ilusión Realista
-15,Teletransporte
-15,Amplificación de Poder
-15,Fusión de Elementos
+12,Bola de Fuego
+12,Tormenta de Hielo
+12,Rayo Eléctrico
+12,Terremoto
+12,Tornado
+12,Muro de Agua
+12,Explosión de Tierra
+12,Tormenta de Arena
+13,Hechizo Combinado Elemental
+13,Transformación Múltiple
+13,Escudo Protector
+13,Curación Avanzada
+13,Ilusión Realista
+13,Teletransporte
+13,Amplificación de Poder
+13,Fusión de Elementos
+14,Hechizo de Invisibilidad
+14,Transformación Animal
+14,Telepatía
+14,Control Mental
+14,Portal Dimensional
+14,Resurrección Menor
+14,Clonación Temporal
+14,Manipulación del Tiempo
+15,Hechizo de Invisibilidad
+15,Transformación Animal
+15,Telepatía
+15,Control Mental
+15,Portal Dimensional
+15,Resurrección Menor
+15,Clonación Temporal
+15,Manipulación del Tiempo
+16,Bola de Fuego
+16,Tormenta de Hielo
+16,Rayo Eléctrico
+16,Terremoto
+16,Tornado
+16,Muro de Agua
+16,Explosión de Tierra
+16,Tormenta de Arena
+17,Bola de Fuego
+17,Tormenta de Hielo
+17,Rayo Eléctrico
+17,Terremoto
+17,Tornado
+17,Muro de Agua
+17,Explosión de Tierra
+17,Tormenta de Arena
+18,Bola de Fuego
+18,Tormenta de Hielo
+18,Rayo Eléctrico
+18,Terremoto
+18,Tornado
+18,Muro de Agua
+18,Explosión de Tierra
+18,Tormenta de Arena
+19,Bola de Fuego
+19,Tormenta de Hielo
+19,Rayo Eléctrico
+19,Terremoto
+19,Tornado
+19,Muro de Agua
+19,Explosión de Tierra
+19,Tormenta de Arena
+20,Bola de Fuego
+20,Tormenta de Hielo
+20,Rayo Eléctrico
+20,Terremoto
+20,Tornado
+20,Muro de Agua
+20,Explosión de Tierra
+20,Tormenta de Arena
+21,Hechizo Combinado Elemental
+21,Transformación Múltiple
+21,Escudo Protector
+21,Curación Avanzada
+21,Ilusión Realista
+21,Teletransporte
+21,Amplificación de Poder
+21,Fusión de Elementos
+22,Hechizo de Invisibilidad
+22,Transformación Animal
+22,Telepatía
+22,Control Mental
+22,Portal Dimensional
+22,Resurrección Menor
+22,Clonación Temporal
+22,Manipulación del Tiempo
+23,Hechizo de Invisibilidad
+23,Transformación Animal
+23,Telepatía
+23,Control Mental
+23,Portal Dimensional
+23,Resurrección Menor
+23,Clonación Temporal
+23,Manipulación del Tiempo
+24,Hechizo Combinado Elemental
+24,Transformación Múltiple
+24,Escudo Protector
+24,Curación Avanzada
+24,Ilusión Realista
+24,Teletransporte
+24,Amplificación de Poder
+24,Fusión de Elementos
+25,Bola de Fuego
+25,Tormenta de Hielo
+25,Rayo Eléctrico
+25,Terremoto
+25,Tornado
+25,Muro de Agua
+25,Explosión de Tierra
+25,Tormenta de Arena
+26,Hechizo Básico
+26,Protección Simple
+27,Hechizo Básico
+27,Protección Simple
+28,Hechizo Básico
+28,Protección Simple
+29,Hechizo Básico
+29,Protección Simple
+30,Hechizo Básico
+30,Protección Simple
