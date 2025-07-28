@@ -61,10 +61,3 @@ Wizard** csvManager::loadWizards(const char* filePath, int* count) {
     *count = index;
     return wizards;
 }
-
-void csvManager::freeWizardArray(Wizard** wizards, int count) {
-    for (int i = 0; i < count; ++i) {
-        delete wizards[i];
-    }
-    delete[] wizards;
-}

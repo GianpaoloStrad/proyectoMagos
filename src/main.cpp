@@ -50,12 +50,16 @@ int main() {
                 break;
             case 3:
                 tree.reassignOwnerOnDeath();
+                std::cout << "Guardando cambios tras muerte del dueño..." << std::endl;
+                tree.saveToCSV("wizards.csv");
                 break;
             case 4: {
                 int id;
                 std::cout << "Ingrese el ID del mago a editar: ";
                 std::cin >> id;
                 tree.editWizardData(tree.findWizardByIdPublic(id));
+                std::cout << "Guardando cambios tras edición..." << std::endl;
+                tree.saveToCSV("wizards.csv");
                 break;
             }
             case 5: {

@@ -13,7 +13,6 @@ private:
     Wizard* findCurrentOwner(Wizard* node) const;
     Wizard* findBestSuccessor(Wizard* node) const;
     void resetAllOwners(Wizard* node) const;
-    void simulateSuccessionLine(const Wizard* start, bool* deadMask, int maxWizards) const;
     void fillWizardArray(const Wizard* node, Wizard** arr, int& count, int max) const;
 
 public:
@@ -23,7 +22,6 @@ public:
     void loadSpellsFromCSV(const char* filePath);
     Wizard* getRoot() const;
     void printSuccessionLine() const; // Muestra la línea de sucesión (magos vivos)
-    void printTrueSuccessionLine() const; // Muestra la línea de sucesión real según las reglas
     void reassignOwnerOnDeath(); // Reasigna el dueño del hechizo si el actual muere
     Wizard* findWizardByIdPublic(int id); // Búsqueda pública por ID
     void editWizardData(Wizard* wizard); // Editar datos permitidos de un mago
@@ -31,6 +29,5 @@ public:
     void showWizardCompleteData(int wizardId); // Mostrar datos completos de un mago específico
     void checkAndReassignOwner(); // Verificar y reasignar automáticamente si el dueño está muerto
     Wizard* getCurrentOwner() const; // Obtener el dueño actual vivo del hechizo
-private:
     Wizard* findBestSuccessorFromAll() const; // Buscar el mejor sucesor en todo el árbol
 };

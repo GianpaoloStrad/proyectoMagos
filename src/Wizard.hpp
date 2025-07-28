@@ -21,6 +21,4 @@ public:
 
     Wizard(int id, const char* name, const char* lastName, char gender, int age, 
            int idFather, bool isDead, const char* typeMagic, bool isOwner);
-    bool canBeOwner() const;
-    void showSpells(const SpellManager* spellManager) const; // Mostrar lista de hechizos del mago
 };

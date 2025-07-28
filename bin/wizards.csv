@@ -6,10 +6,10 @@ id,name,last_name,gender,age,id_father,is_dead,type_magic,is_owner
 14,Palamedes,Saracen,H,33,9,1,unique,0
 22,Dinadan,WiseKnight,H,29,14,1,unique,0
 29,Sophia,YoungWitch,M,17,14,0,no_magic,0
-10,Iseult,Princess,M,32,4,0,unique,0
-15,Isolde,Irish,M,29,10,0,unique,0
+10,Iseult,Princess,M,32,4,1,unique,0
+15,Isolde,Irish,M,29,10,1,unique,0
 23,Viviane,Enchantress,M,55,15,1,unique,0
-30,Lily,YoungWitch,M,15,15,0,no_magic,0
+30,Lily,YoungWitch,M,15,15,0,no_magic,1
 5,Mordred,BlackKnight,H,38,2,1,mixed,0
 3,Arthur,Pendragon,H,45,1,1,elemental,0
 6,Gawain,GoldenKnight,H,42,3,1,elemental,0
@@ -21,4 +21,4 @@ id,name,last_name,gender,age,id_father,is_dead,type_magic,is_owner
 25,Godric,Gryffindor,H,65,17,1,elemental,0
 12,Percival,GrailKnight,H,30,7,0,elemental,0
 18,Agrivaine,Orkney,H,36,12,1,elemental,0
-19,Gareth,Orkney,H,34,12,0,elemental,1
+19,Gareth,Orkney,H,34,12,1,elemental,0
