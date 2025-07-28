@@ -1,13 +1,13 @@
 #include "Wizard.hpp"
 #include "SpellManager.hpp"
-#include <cstring> // Para strcpy
+#include <cstring> // Para copiar cadenas de texto
 #include <iostream>
 
-// --- Implementación del Constructor ---
+// Creamos un nuevo mago con todos sus datos
 Wizard::Wizard(int id, const char* name, const char* lastName, char gender, int age, 
                int idFather, bool isDead, const char* typeMagic, bool isOwner) {
     this->id = id;
-    strcpy(this->name, name); // Copiar el nombre
+    strcpy(this->name, name); // Copiamos el nombre del mago
     strcpy(this->lastName, lastName);
     this->gender = gender;
     this->age = age;
@@ -15,6 +15,6 @@ Wizard::Wizard(int id, const char* name, const char* lastName, char gender, int 
     this->isDead = isDead;
     strcpy(this->typeMagic, typeMagic);
     this->isOwner = isOwner;
-    this->left = nullptr;
+    this->left = nullptr;  // Inicialmente no tiene discípulos
     this->right = nullptr;
 }

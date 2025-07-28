@@ -6,8 +6,8 @@ int main() {
     // Siempre busca los archivos en el mismo directorio donde está el ejecutable
     const char* wizardsPath = "wizards.csv";
     const char* spellsPath = "spells.csv";
-    tree.buildFromCSV(wizardsPath);
-    tree.loadSpellsFromCSV(spellsPath);
+    tree.buildFromCsv(wizardsPath);
+    tree.loadSpellsFromCsv(spellsPath);
 
     if (!tree.getRoot()) {
         std::cerr << "Error al cargar el CSV." << std::endl;
@@ -51,7 +51,7 @@ int main() {
             case 3:
                 tree.reassignOwnerOnDeath();
                 std::cout << "Guardando cambios tras muerte del dueño..." << std::endl;
-                tree.saveToCSV("wizards.csv");
+                tree.saveToCsv("wizards.csv");
                 break;
             case 4: {
                 int id;
@@ -59,7 +59,7 @@ int main() {
                 std::cin >> id;
                 tree.editWizardData(tree.findWizardByIdPublic(id));
                 std::cout << "Guardando cambios tras edición..." << std::endl;
-                tree.saveToCSV("wizards.csv");
+                tree.saveToCsv("wizards.csv");
                 break;
             }
             case 5: {

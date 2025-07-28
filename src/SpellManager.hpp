@@ -16,7 +16,7 @@ private:
 
 public:
     SpellManager();
-    void loadSpellsFromCSV(const char* filePath);
+    void loadSpellsFromCsv(const char* filePath);
     void getSpellsByWizardId(int wizardId, Spell* result, int& count) const;
     void printSpellsForWizard(int wizardId) const;
 }; 

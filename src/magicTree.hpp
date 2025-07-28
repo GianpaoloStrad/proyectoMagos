@@ -18,14 +18,14 @@ private:
 public:
     MagicTree();
     ~MagicTree();
-    bool buildFromCSV(const char* filePath);
-    void loadSpellsFromCSV(const char* filePath);
+    bool buildFromCsv(const char* filePath);
+    void loadSpellsFromCsv(const char* filePath);
     Wizard* getRoot() const;
     void printSuccessionLine() const; // Muestra la línea de sucesión (magos vivos)
     void reassignOwnerOnDeath(); // Reasigna el dueño del hechizo si el actual muere
     Wizard* findWizardByIdPublic(int id); // Búsqueda pública por ID
     void editWizardData(Wizard* wizard); // Editar datos permitidos de un mago
-    void saveToCSV(const char* filePath) const; // Guarda todos los magos en un archivo CSV
+    void saveToCsv(const char* filePath) const; // Guarda todos los magos en un archivo CSV
     void showWizardCompleteData(int wizardId); // Mostrar datos completos de un mago específico
     void checkAndReassignOwner(); // Verificar y reasignar automáticamente si el dueño está muerto
     Wizard* getCurrentOwner() const; // Obtener el dueño actual vivo del hechizo
